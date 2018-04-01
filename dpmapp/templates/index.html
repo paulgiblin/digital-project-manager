@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="article-list">
+        <div class="container">
+            <div class="intro">
+                <h2 class="text-center">DevNetCreate 2018</h2>
+                <p class="text-justify">The Digital Project Manager workshop is presented by Paul Giblin of Presidio. This interface was created in Bootstrap Studio 4, with much more functionality added through Flask and Jinja2. The focus of the lab is not on this interface,
+                    but the possibilities available to us in the days of digital infrastructure and cloud collaboration. The code demonstrating one such possibility is all Python and will be kept discrete from this interface as much as possible. If you
+                    want to keep up with Paul's other projects connect, subscribe, and follow him through the links in the footer.</p>
+            </div>
+            <div class="row articles">
+                <div class="col-sm-6 col-md-4 item"><i class="material-icons" style="font-size:193px;">settings_input_component</i><a href="/switch"></a>
+                    <h3 class="name">Cisco Switch Infrastructure</h3>
+                    <p class="description">Configure the Cisco switch infrastructre that we will be monitoring for client moves.</p><a href="/switch" class="action"><i class="fa fa-arrow-circle-right"></i></a></div>
+                <div class="col-sm-6 col-md-4 item"><a href="http://www.ciscospark.com/downloads.html" target="_blank"><img class="img-fluid" src="{{ url_for('static', filename='img/logo_spark_lg@256.png') }}" style="width:200px;"></a>
+                    <h3 class="name">Cisco Spark</h3>
+                    <p class="description">Configure Cisco Spark teams, spaces and messaging parameters so the necessary building blocks exist for the notifications to target.</p><a href="/spark" class="action"><i class="fa fa-arrow-circle-right"></i></a></div>
+                <div class="col-sm-6 col-md-4 item"><i class="fa fa-random" style="font-size:200px;"></i><a href="/migrate"></a>
+                    <h3 class="name">Migration</h3>
+                    <p class="description">Start the migration process and keep everyone updated!</p><a href="/migrate" class="action"><i class="fa fa-arrow-circle-right"></i></a></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

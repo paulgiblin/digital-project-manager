@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Registration-Form-with-Photo.css') }}" />
+{% endblock %}
+{% block content %}
+    <div class="register-photo">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+         <ul class="d-flex justify-content-center" style="background-color:#1999d5;">
+            {% for message in messages %}
+            <li class="d-inline-flex" style="margin:10px;margin-bottom:0;margin-top:0;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="form-container">
+            <div class="image-holder" style="background-image:url(&quot;{{ url_for('static', filename='img/IMG_0822.JPG') }}&quot;);"></div>
+            <form method="post">
+                {{ form.csrf_token }}
+                <h2 class="text-center">Enter switch management & migration information</h2>
+                <div class="form-group">{{ form.source_switch_ip(placeholder='Source Switch IP', class_='form-control') }}</div>
+                <div class="form-group">{{ form.destination_switch_ip(placeholder='Destination Switch IP', class_='form-control') }}</div>
+                <div class="form-group">{{ form.starting_clients(placeholder='# Clients to be Moved', class_='form-control') }}</div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="background-color:rgb(116,191,69);">Save</button></div>
+                <a href="https://www.cisco.com/c/en/us/td/docs/net_mgmt/ciscoworks_lan_management_solution/4-2/user/guide/admin/admin/appendixmacnot.html#65048" class="already">Read about about mac-notification @ Cisco.com.</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

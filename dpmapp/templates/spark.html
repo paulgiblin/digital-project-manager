@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Registration-Form-with-Photo.css') }}" />
+{% endblock %}
+{% block content %}
+    <div class="register-photo">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+         <ul class="d-flex justify-content-center" style="background-color:#1999d5;">
+            {% for message in messages %}
+            <li class="d-inline-flex" style="margin:10px;margin-bottom:0;margin-top:0;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="form-container">
+            <div class="image-holder" style="background-image:url(&quot;{{ url_for('static', filename='img/logo_spark_lg@256.png') }}&quot;);background-size:contain;"></div>
+            <form method="post">
+                {{ form.csrf_token }}
+                <h2 class="text-center"><strong>Create</strong> a Team, with a Space and add users</h2>
+                <div class="form-group">{{ form.spark_token(placeholder='Spark Token', class_='form-control') }}</div>
+                <div class="form-group">{{ form.team_name(placeholder='Team name', class_='form-control') }}</div>
+                <div class="form-group">{{ form.space_name(placeholder='Space name', class_='form-control') }}</div>
+                <div class="form-group">{{ form.user_email(placeholder='Your email', class_='form-control') }}</div>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="background-color:rgb(116,191,69);">Create &amp; Join</button></div>
+                <a href="http://developer.ciscospark.com" class="already">Visit developer.ciscospark.com for more info.</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

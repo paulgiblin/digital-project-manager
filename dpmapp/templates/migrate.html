@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Registration-Form-with-Photo.css') }}" />
+{% endblock %}
+{% block content %}
+    <div class="register-photo">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+         <ul class="d-flex justify-content-center" style="background-color:#1999d5;">
+            {% for message in messages %}
+            <li class="d-inline-flex" style="margin:10px;margin-bottom:0;margin-top:0;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="form-container">
+            <form method="post"><i class="fa fa-random d-flex justify-content-center" style="font-size:200px;"></i>
+                {{ form.csrf_token }}
+                <h2 class="text-center"><strong>Let's migrate!</strong></h2>
+                <div class="form-group"><button class="btn btn-primary btn-block" type="submit" style="background-color:rgb(116,191,69);">Start Migration</button></div><a href="http://developer.ciscospark.com" class="already">Monitor the status of the migration from Spark!</a></form>
+        </div>
+    </div>
+{% endblock %}
