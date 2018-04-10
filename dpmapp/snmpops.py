@@ -1,11 +1,12 @@
 import logging
-from dpmapp import db
-from dpmapp.models import SparkInfo
-from dpmapp.migrateops import send_spark_message
-from pysnmp.entity import engine, config
+
 from pysnmp.carrier.asyncore.dgram import udp
+from pysnmp.entity import engine, config
 from pysnmp.entity.rfc3413 import ntfrcv
 
+from dpmapp import db
+from dpmapp.sparkops import send_spark_message
+from dpmapp.models import SparkInfo
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

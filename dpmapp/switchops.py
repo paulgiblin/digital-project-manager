@@ -1,4 +1,5 @@
 import logging
+
 from dpmapp import db
 from dpmapp.models import SparkInfo
 

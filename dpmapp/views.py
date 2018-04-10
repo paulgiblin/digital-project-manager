@@ -1,9 +1,10 @@
 from flask import render_template, redirect, url_for, flash
-from dpmapp.forms import SwitchForm, SparkForm, MigrateForm
-from dpmapp.switchops import initialize_switches
-from dpmapp.sparkops import initialize_spark
-from dpmapp.migrateops import start_migration
+
 from dpmapp.dpmapp import flash_errors
+from dpmapp.forms import SwitchForm, SparkForm, MigrateForm
+from dpmapp.migrateops import start_migration
+from dpmapp.sparkops import initialize_spark
+from dpmapp.switchops import initialize_switches
 from . import app
 
 

@@ -1,7 +1,9 @@
 import json
-import requests
 import logging
 import time
+
+import requests
+
 from dpmapp import db
 from dpmapp.models import SparkInfo
 
@@ -31,8 +33,9 @@ def initialize_spark(spark_token, team_name, space_name, user_email):
 
     # Overwrite token with new and add the submitted user to email list.
     token.value = spark_token
-    demo_email_list.append(user_email)
     db.session.commit()
+
+    demo_email_list.append(user_email)
 
     # Log the collected data for troubleshooting purposes.
     logger.debug(f'User Spark Token: {spark_token}')
@@ -42,15 +45,17 @@ def initialize_spark(spark_token, team_name, space_name, user_email):
 
     # Create a Spark Team and a Spark Space INSIDE that team
     try:
-        teamid.value = create_spark_team(team_name)
+        # Build the Team and add people
+        teamid.value = create_spark_team(team_name)  # Create the team and store the team ID returned
         logger.debug(f"Team created - TeamID: {teamid.value}")
-        add_people_to_spark_team(teamid.value, *demo_email_list)
+        add_people_to_spark_team(teamid.value, *demo_email_list)  # Add people to the team - 200 OK
 
-        roomid.value = create_spark_team_space(teamid.value, space_name)
+        # Build the Space inside the Team and add people
+        roomid.value = create_spark_team_space(teamid.value, space_name)  # Create the Space and store the ID returned
         logger.debug(f"Space created - RoomID: {roomid.value}")
-        add_people_to_spark_space(roomid.value, *demo_email_list)
+        add_people_to_spark_space(roomid.value, *demo_email_list)  # Add people to the space - 200 OK
 
-        db.session.commit()
+        db.session.commit()  # Load the staged data into the SQLite DB so you don't make new teams on start/stop
     except ConnectionError as e:
         logger.debug(e)
 
@@ -71,7 +76,7 @@ def create_spark_team(name):
         while response.status_code != 200:
             logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
             time.sleep(response.headers['Retry-After'] + 5)
-            requests.request("POST", url, data=json.dumps(payload), headers=headers)
+            response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
             logger.debug(f'{response.url} {response.status_code} {response.json()}')
 
     return response.json()['id']
@@ -92,13 +97,12 @@ def add_people_to_spark_team(teamid, *args):
         }
         response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
         logger.debug(f'{response.url} {response.status_code} {response.json()}')
-
-    if response.status_code == 429:
-            while response.status_code != 200:
-                logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
-                time.sleep(response.headers['Retry-After'] + 5)
-                requests.request("POST", url, data=json.dumps(payload), headers=headers)
-                logger.debug(f'{response.url} {response.status_code} {response.json()}')
+        if response.status_code == 429:
+                while response.status_code != 200:
+                    logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
+                    time.sleep(response.headers['Retry-After'] + 5)
+                    response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
+                    logger.debug(f'{response.url} {response.status_code} {response.json()}')
     return response
 
 
@@ -119,7 +123,7 @@ def create_spark_team_space(teamid, title):
         while response.status_code != 200:
             logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
             time.sleep(response.headers['Retry-After'] + 5)
-            requests.request("POST", url, data=json.dumps(payload), headers=headers)
+            response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
             logger.debug(f'{response.url} {response.status_code} {response.json()}')
     return response.json()['id']
 
@@ -143,7 +147,7 @@ def add_people_to_spark_space(spaceid, *args):
             while response.status_code != 200:
                 logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
                 time.sleep(response.headers['Retry-After'] + 5)
-                requests.request("POST", url, data=json.dumps(payload), headers=headers)
+                response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
                 logger.debug(f'{response.url} {response.status_code} {response.json()}')
 
     return response
@@ -162,7 +166,7 @@ def delete_spark_message(message_id):
         while response.status_code != 200:
             logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
             time.sleep(response.headers['Retry-After'] + 5)
-            requests.request("POST", url, headers=headers)
+            response = requests.request("POST", url, headers=headers)
             logger.debug(f'{response.url} {response.status_code}')
 
 
@@ -185,6 +189,6 @@ def send_spark_message(message):
         while response.status_code != 200:
             logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
             time.sleep(response.headers['Retry-After'] + 5)
-            requests.request("POST", url, data=json.dumps(payload), headers=headers)
+            response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
             logger.debug(f'{response.url} {response.status_code} {response.json()}')
     return response.json()['id']

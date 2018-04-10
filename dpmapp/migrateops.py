@@ -1,12 +1,12 @@
 import logging
-import time
 import threading
+import time
 from datetime import datetime, timedelta
+
 from dpmapp import db
 from dpmapp.models import SparkInfo
+from dpmapp.snmpops import clients_this_interval, initialize_snmp_listener
 from dpmapp.sparkops import send_spark_message, delete_spark_message
-from dpmapp.snmpops import initialize_snmp_listener
-from dpmapp.snmpops import clients_this_interval
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -34,7 +34,7 @@ def start_migration():
     start_time = SparkInfo.query.filter_by(key='start_time').first()
     end_time = SparkInfo.query.filter_by(key='end_time').first()
     start_time.value = datetime.now().strftime('%H:%M')
-    end_time.value = datetime.strftime((datetime.strptime(start_time.value, '%H:%M') + timedelta(hours=1)), '%H:%M')
+    end_time.value = datetime.strftime((datetime.strptime(start_time.value, '%H:%M') + timedelta(hours=6)), '%H:%M')
 
     # Reset client counters
     # We're starting a new migration, our counters should be reset to zero
@@ -147,7 +147,7 @@ def migration_rate_string(ports_per_minute):
     elif ports_per_minute < nominal_range.start:
         rate_icon = '🐢'
 
-    return f'{rate_icon}[{ports_per_minute} pp/m]'
+    return f'{rate_icon}[{ports_per_minute} p/m]'
 
 
 def estimated_time_of_completion():
