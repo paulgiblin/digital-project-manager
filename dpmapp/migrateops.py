@@ -94,29 +94,9 @@ def create_status_message():
 
 
 def percent_complete():
-    # Define how many total pips are in the progress bar
-    pip_scale = 20
-
-    # Define what complete and incomplete look like, any unicode character will do - we're using emoji
-    complete_pip = '🔵'
-    incomplete_pip = '⚪'
-
-    # Get raw migration state data from the database and convert it to integers (how many things have moved)
-    starting_clients = int(SparkInfo.query.filter_by(key='starting_clients').first().value)
-    total_moved_clients = int(SparkInfo.query.filter_by(key='total_moved_clients').first().value)
-
-    # Do the math!
-    migration_completion_percentage = total_moved_clients/starting_clients
-    complete_pips = round(migration_completion_percentage*pip_scale)
-    incomplete_pips = pip_scale - complete_pips
-
-    # Build the status bar emoji string, one character at a time
-    bar = ''
-    for x in range(0, complete_pips):
-        bar = bar + complete_pip
-    for x in range(0, incomplete_pips):
-        bar = bar + incomplete_pip
-    return f'{round(migration_completion_percentage*100)}% [{bar}]'
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
 
 
 def update_migration_rate():
@@ -135,19 +115,11 @@ def update_migration_rate():
 
 def migration_rate_string(ports_per_minute):
     # 🏎🐰🐢[8 pp/m]
-    # Comparing the ppm to the nominal range, return a representative rate string
+    # Compare the p/m to some arbitrary nominal range, return a representative rate string
     # Bonus goal: allow the user to define the nominal speed
-    rate_icon = ''
-    nominal_range = range(1, 2)
-
-    if ports_per_minute > nominal_range.stop:
-        rate_icon='🏎'
-    elif ports_per_minute in nominal_range:
-        rate_icon = '🐰'
-    elif ports_per_minute < nominal_range.start:
-        rate_icon = '🐢'
-
-    return f'{rate_icon}[{ports_per_minute} p/m]'
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
 
 
 def estimated_time_of_completion():
