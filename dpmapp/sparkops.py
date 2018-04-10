@@ -61,49 +61,19 @@ def initialize_spark(spark_token, team_name, space_name, user_email):
 
 
 def create_spark_team(name):
-    spark_token = SparkInfo.query.filter_by(key='spark_token').first().value
-    url = "https://api.ciscospark.com/v1/teams"
-    headers = {
-        'Authorization': f"Bearer {spark_token}",
-        'Content-Type': "application/json"
-    }
-    payload = {
-        'name': name
-    }
-    response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-    logger.debug(f'{response.url} {response.status_code} {response.json()}')
-    if response.status_code == 429:
-        while response.status_code != 200:
-            logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
-            time.sleep(response.headers['Retry-After'] + 5)
-            response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-            logger.debug(f'{response.url} {response.status_code} {response.json()}')
-
-    return response.json()['id']
+    pass
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
 
 
 def add_people_to_spark_team(teamid, *args):
-    spark_token = SparkInfo.query.filter_by(key='spark_token').first().value
-    url = "https://api.ciscospark.com/v1/team/memberships"
-    headers = {
-        'Authorization': f"Bearer {spark_token}",
-        'Content-Type': "application/json"
-    }
-    for userEmail in args:
-        payload = {
-            'teamId': teamid,
-            'personEmail': userEmail,
-            'isModerator': "true"
-        }
-        response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-        logger.debug(f'{response.url} {response.status_code} {response.json()}')
-        if response.status_code == 429:
-                while response.status_code != 200:
-                    logger.debug(f'Waiting {response.headers["Retry-After"]} seconds due to rate limiting')
-                    time.sleep(response.headers['Retry-After'] + 5)
-                    response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-                    logger.debug(f'{response.url} {response.status_code} {response.json()}')
-    return response
+    pass
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
 
 
 def create_spark_team_space(teamid, title):
