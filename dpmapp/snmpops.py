@@ -61,35 +61,11 @@ def initialize_snmp_listener(community, port):
 # Callback function for receiving and processing SNMP traps
 def handle_mac_notification(snmpEngine, stateReference, contextEngineId, contextName,
                             varBinds, cbCtx):
-    # Extract transport information tuple
-    (transportDomain, transportAddress) = snmpEngine.msgAndPduDsp.getTransportInfo(stateReference)
-    logger.debug(f"SNMP Notifications from IP: {transportAddress[0]}")
-
-    # Iterate through received data
-    for name, val in varBinds:
-        # Only parse the mac-notification data
-        if name.prettyPrint() == '1.3.6.1.4.1.9.9.215.1.1.8.1.2.1':
-            trapInfo = str(val.prettyPrint())
-            notificationTrapMacChangeType = trapInfo[2:4]
-            notificationTrapVlan = str(int(trapInfo[4:8], 16))
-            notificationTrapMac = trapInfo[8:20]
-            notificationTrapPort = str(int(trapInfo[20:24], 16))
-
-            # Handle client detached event
-            if notificationTrapMacChangeType == '02':
-                message = f'MAC Address: {notificationTrapMac.upper()} has been detached from port: ' \
-                          f'{notificationTrapPort} on Switch: {transportAddress[0]} Access VLAN: {notificationTrapVlan}'
-                logger.debug(message)
-                send_spark_message(message)
-                port_detached_handler(transportAddress[0], notificationTrapMac, notificationTrapPort)
-
-            # Handle client attached event
-            elif notificationTrapMacChangeType == '01':
-                message = f'MAC Address: {notificationTrapMac.upper()} has been attached to port: ' \
-                          f'{notificationTrapPort} on Switch: {transportAddress[0]} Access VLAN: {notificationTrapVlan}'
-                logger.debug(message)
-                send_spark_message(message)
-                port_attached_handler(transportAddress[0], notificationTrapMac, notificationTrapPort)
+    pass
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
 
 
 def port_detached_handler(switch_ip, client_mac, port):
@@ -98,11 +74,8 @@ def port_detached_handler(switch_ip, client_mac, port):
 
 
 def port_attached_handler(switch_ip, client_mac, port):
-    # Only increment if the switch sending the attach notification is the destination device
-    destination_switch_ip = SparkInfo.query.filter_by(key='destination_switch_ip').first().value
-    if destination_switch_ip == switch_ip:
-        total_moved_clients = SparkInfo.query.filter_by(key='total_moved_clients').first()
-        total_moved_clients.value = 1 + int(total_moved_clients.value)
-        db.session.commit()
-        clients_this_interval.append(client_mac)  # Global variable in the migrateops module
-    return
+    pass
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
