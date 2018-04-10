@@ -93,7 +93,7 @@ def create_status_message():
     return message
 
 
-def percent_complete():
+# def percent_complete():
     # YOUR CODE GOES HERE
     # YOUR CODE GOES HERE
     # YOUR CODE GOES HERE
@@ -113,7 +113,7 @@ def update_migration_rate():
     current_migration_rate = interval_moved_client_count / message_interval_minutes
 
 
-def migration_rate_string(ports_per_minute):
+# def migration_rate_string(ports_per_minute):
     # 🏎🐰🐢[8 pp/m]
     # Compare the p/m to some arbitrary nominal range, return a representative rate string
     # Bonus goal: allow the user to define the nominal speed
