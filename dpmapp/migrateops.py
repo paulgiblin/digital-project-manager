@@ -88,7 +88,7 @@ def create_status_message():
     # Status:     25% [🔵🔵🔵🔵🔵⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪⚪]     🏎🐰🐢[8 pp/m]
     # ✅⚠️❗️[ETC 🏁 1:30:00]     🕙[Window Start/End 22:00/03:00]🕒     ⏳10% [Elapsed 00:30]
     nl = '\n'
-    message = f'Status:     {percent_complete()}     {migration_rate_string(current_migration_rate)}{nl}{nl}' \
+    message = f'Status:     percent_complete()     migration_rate_string(current_migration_rate){nl}{nl}' \
               f'{estimated_time_of_completion()}     {window_times()}     {elapsed_time()}'
     return message
 
