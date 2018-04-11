@@ -88,7 +88,7 @@ https://www.jetbrains.com/pycharm/download/
 ---
 
 ### Clone the repo
-`git clone git@github.com:paulgiblin/digital-project-manager.git`
+`git clone https://github.com/paulgiblin/digital-project-manager.git`
 
 ---
 
