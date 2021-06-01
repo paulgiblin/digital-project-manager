@@ -15,6 +15,6 @@ pysmi==0.2.2
 pysnmp==4.4.4
 requests==2.18.4
 SQLAlchemy==1.2.5
-urllib3==1.22
+urllib3==1.26.5
 Werkzeug==0.15.3
 WTForms==2.1
